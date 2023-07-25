@@ -18,4 +18,4 @@ import { loggerConfigFactory } from './factories';
   ],
   providers: [Logger],
 })
-export class AppModule {}
+export class LoggerModule {}
