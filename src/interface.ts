@@ -1,8 +1,15 @@
+export type LogLevel = 'critical' | 'error' | 'warn' | 'info';
+
 export interface ILoggerParams {
+  level?: LogLevel;
   message?: string;
   file?: string;
   metadata?: any;
   id?: string;
+}
+
+export interface ILoggerInfoParams extends ILoggerParams {
+  level: 'info';
 }
 
 export interface ILogger {

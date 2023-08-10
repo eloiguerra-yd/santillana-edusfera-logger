@@ -1,7 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { WinstonModuleOptions } from 'nest-winston';
 import * as winston from 'winston';
-import { ILoggerParams } from './interface';
 
 export const loggerConfigFactory = (
   config: ConfigService,
@@ -18,13 +17,16 @@ export const loggerConfigFactory = (
       new winston.transports.Console({
         format: winston.format.combine(
           winston.format.timestamp(),
-          winston.format.printf((info: ILoggerParams) => {
+          winston.format.ms(),
+          winston.format.printf((info) => {
             const file = info.file ? `file: ${info.file} ` : '';
             const id = info.id ? `id: ${info.id} ` : '';
             const message = info.message ? `message: ${info.message} ` : '';
             const metadata = info.metadata;
+            const level = info.level ? info.level : 'info';
+            const date = `timestamp: ${new Date().toISOString()}`;
 
-            return `${file} ${id} ${message} ${JSON.stringify(
+            return `[${level}] ${date}\n${file} ${id} ${message} ${JSON.stringify(
               metadata,
               null,
               2,
