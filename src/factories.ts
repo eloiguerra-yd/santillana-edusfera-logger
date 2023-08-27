@@ -22,16 +22,16 @@ export const loggerConfigFactory = (
             const file = info.file ? `file: ${info.file} ` : '';
             const message = info.message ? `message: ${info.message} ` : '';
             const metadata = info.metadata;
-            const level = info.level ? info.level : 'info';
-            const date = `timestamp: ${new Date().toISOString()}`;
+            const level = info.level ? `[${info.level$}]` : '[info]';
+            const date = new Date().toISOString();
 
             return JSON.stringify({
-              metadata,
+              level,
               file,
               message,
-              level,
               date,
-            }, null, 2);
+              metadata: JSON.stringify(metadata, null, 2),
+            });
           }),
         ),
       }),
