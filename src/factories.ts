@@ -16,13 +16,11 @@ export const loggerConfigFactory = (
     transports: [
       new winston.transports.Console({
         format: winston.format.combine(
-          winston.format.timestamp(),
-          winston.format.ms(),
-          winston.format.printf((info) => {
-            const file = info.file ? `file: ${info.file} ` : '';
-            const message = info.message ? `message: ${info.message} ` : '';
-            const metadata = info.metadata;
-            const level = info.level ? `[${info.level$}]` : '[info]';
+          winston.format.printf(({ file, level, message, metadata }) => {
+            // const file = info.file;
+            // const message = info.message && info.message;
+            // const metadata = info.metadata;
+            // const level = info.level ? info.level : 'info';
             const date = new Date().toISOString();
 
             return JSON.stringify({
@@ -30,7 +28,7 @@ export const loggerConfigFactory = (
               file,
               message,
               date,
-              metadata: JSON.stringify(metadata, null, 2),
+              metadata,
             });
           }),
         ),
